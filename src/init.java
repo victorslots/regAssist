@@ -5,17 +5,19 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 
+import filesMng.FilesMng;
 import func.Func;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 public class init {
 	
 	private JFrame frmRegistroDeAtividades;
-	private JTextField textNome;
-	private JLabel lblQtde;
 
 	/**
 	 * Launch the application.
@@ -44,39 +46,46 @@ public class init {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		FilesMng manager = new FilesMng();
+		
 		frmRegistroDeAtividades = new JFrame();
 		frmRegistroDeAtividades.setTitle("Registro de Atividades");
-		frmRegistroDeAtividades.setBounds(100, 100, 450, 300);
+		frmRegistroDeAtividades.setBounds(100, 100, 800, 600);
 		frmRegistroDeAtividades.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmRegistroDeAtividades.getContentPane().setLayout(null);
 		
-		textNome = new JTextField();
-		textNome.setBounds(50, 11, 374, 20);
-		frmRegistroDeAtividades.getContentPane().add(textNome);
-		textNome.setColumns(10);
-		
-		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setBounds(10, 14, 46, 14);
-		frmRegistroDeAtividades.getContentPane().add(lblNome);
-		
-		JButton btnCriar = new JButton("Criar Funcionario");
-		btnCriar.setBounds(263, 217, 161, 33);
+		JButton btnCriar = new JButton("Criar Funcionário");
+		btnCriar.setBounds(10, 11, 161, 33);
 		frmRegistroDeAtividades.getContentPane().add(btnCriar);
 		
-		lblQtde = new JLabel("QtdeFunc:");
-		lblQtde.setBounds(10, 51, 67, 14);
-		frmRegistroDeAtividades.getContentPane().add(lblQtde);
+		JList list = new JList(manager.atualizaFuncionarios());
+		list.setBounds(10, 61, 90, 467);
+		frmRegistroDeAtividades.getContentPane().add(list);
+		
+		JButton btnAtualizarFuncionarios = new JButton("Atualizar Funcionários");
+		btnAtualizarFuncionarios.setBounds(190, 11, 161, 33);
+		frmRegistroDeAtividades.getContentPane().add(btnAtualizarFuncionarios);
 		
 		
 		btnCriar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Func funcionario = new Func(textNome.getText());
-				lblQtde.setText("QtdeFunc:" + funcionario.getQtdeFunc());
-				
+				String nome = JOptionPane.showInputDialog("Entre com o nome do Funcionário:");
+				Func funcionario = new Func(nome);
+				manager.criarFuncionário(nome);
+				list.setModel(manager.atualizaFuncionarios());
 			}
 			
+		});
+		
+		btnAtualizarFuncionarios.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				list.setModel(manager.atualizaFuncionarios());
+			}
 		});
 	}
 }

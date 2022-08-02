@@ -3,36 +3,19 @@ package func;
 import java.io.File;
 import java.io.IOException;
 
+/*Classe responsavel pela definição de objetos 'funcionário'"
+ * 
+ */
 public class Func {
-	static int QtdeFunc;
-	private String nome;
-	private String caminho = "src/funcs/";
-	private File pasta = new File(caminho);
+	static int qtdeDeFuncionarios;
+	private String nome = new String();
 
 	public Func(String nome) {
 		this.nome = nome;
-		
-
-		
-		File arquivo = new File(caminho.concat(nome.toUpperCase()));
-		
-
-		try {
-			if (!arquivo.exists()) {
-				arquivo.createNewFile();
-				QtdeFunc = pasta.listFiles().length;
-			} else {
-				System.out.println("Funcionario já existe!");
-			}
-		} catch (IOException e) {
-
-		}
-		
+		qtdeDeFuncionarios++;
 	}
-	public File[] getFuncs() {
-		return pasta.listFiles();
-	}
-	public int getQtdeFunc() {
-		return QtdeFunc;
+
+	public int getQtdeDeFuncuncionarios() {
+		return qtdeDeFuncionarios;
 	}
 }
