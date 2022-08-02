@@ -40,7 +40,7 @@ public class FilesMng {
 		
 		for(int i = 0; i<arquivos.length;i++) {
 			model.add(i, arquivos[i].getName());
-		}
+		} 
 		
 		return model;
 		

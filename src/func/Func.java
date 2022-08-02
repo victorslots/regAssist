@@ -16,6 +16,6 @@ public class Func {
 	}
 
 	public int getQtdeDeFuncuncionarios() {
-		return qtdeDeFuncionarios;
+		return qtdeDeFuncionarios; 
 	}
 }

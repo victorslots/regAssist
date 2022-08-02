@@ -59,7 +59,7 @@ public class init {
 		frmRegistroDeAtividades.getContentPane().add(btnCriar);
 		
 		JList list = new JList(manager.atualizaFuncionarios());
-		list.setBounds(10, 61, 90, 467);
+		list.setBounds(10, 61, 161, 467);
 		frmRegistroDeAtividades.getContentPane().add(list);
 		
 		JButton btnAtualizarFuncionarios = new JButton("Atualizar Funcionários");
