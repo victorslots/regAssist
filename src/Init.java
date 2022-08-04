@@ -4,8 +4,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import filesMng.FilesMng;
 import func.Func;
@@ -14,8 +17,14 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+import javax.swing.ListSelectionModel;
+import javax.swing.JPanel;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
 
-public class init {
+public class Init {
 	
 	private JFrame frmRegistroDeAtividades;
 
@@ -26,7 +35,7 @@ public class init {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					init window = new init();
+					Init window = new Init();
 					window.frmRegistroDeAtividades.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,22 +44,23 @@ public class init {
 		});
 	}
 
-	/**
+	/*
 	 * Create the application.
 	 */
-	public init() {
+	public Init() {
 		initialize();
 	}
 
-	/**
+	/*
 	 * Initialize the contents of the frame.
 	 */
+	
 	private void initialize() {
 		FilesMng manager = new FilesMng();
 		
 		frmRegistroDeAtividades = new JFrame();
 		frmRegistroDeAtividades.setTitle("Registro de Atividades");
-		frmRegistroDeAtividades.setBounds(100, 100, 800, 600);
+		frmRegistroDeAtividades.setBounds(100, 100, 1040, 600);
 		frmRegistroDeAtividades.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmRegistroDeAtividades.getContentPane().setLayout(null);
 		
@@ -59,12 +69,24 @@ public class init {
 		frmRegistroDeAtividades.getContentPane().add(btnCriar);
 		
 		JList list = new JList(manager.atualizaFuncionarios());
-		list.setBounds(10, 61, 161, 467);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setBounds(10, 61, 161, 437);
 		frmRegistroDeAtividades.getContentPane().add(list);
 		
-		JButton btnAtualizarFuncionarios = new JButton("Atualizar Funcionários");
-		btnAtualizarFuncionarios.setBounds(190, 11, 161, 33);
-		frmRegistroDeAtividades.getContentPane().add(btnAtualizarFuncionarios);
+		JButton btnCriarTrabalho = new JButton("Criar Trabalho");
+		btnCriarTrabalho.setBounds(10, 517, 161, 33);
+		frmRegistroDeAtividades.getContentPane().add(btnCriarTrabalho);
+		
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBounds(181, 11, 2, 539);
+		frmRegistroDeAtividades.getContentPane().add(separator);
+		
+		JPanel trabalhos = new JPanel();
+		trabalhos.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		trabalhos.setBackground(Color.WHITE);
+		trabalhos.setBounds(193, 11, 821, 539);
+		frmRegistroDeAtividades.getContentPane().add(trabalhos);
 		
 		
 		btnCriar.addActionListener(new ActionListener() {
@@ -76,15 +98,18 @@ public class init {
 				manager.criarFuncionário(nome);
 				list.setModel(manager.atualizaFuncionarios());
 			}
-			
 		});
 		
-		btnAtualizarFuncionarios.addActionListener(new ActionListener() {
+		btnCriarTrabalho.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				list.setModel(manager.atualizaFuncionarios());
+				Diag criarTrabalho = new Diag();
+				criarTrabalho.setVisible(true);
+				
+				String nome = list.getSelectedValue().toString();
+				manager.escreveTrabalho(nome);
 			}
 		});
 	}
